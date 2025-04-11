@@ -32,21 +32,33 @@ class Quiz:
             self.incorrect_answers += 1
             return False
 
-    def run_quiz(self):
-        self.add_question(Question("¿Cuál es la capital de Francia?", ["Madrid", "París", "Berlín", "Lisboa"], "París"))
-        self.add_question(Question("¿Cuánto es 2 + 2?", ["3", "4", "5", "6"], "4"))
-        self.add_question(Question("¿Qué lenguaje se usa para el desarrollo web del lado del cliente?", ["Python", "Java", "HTML", "C++"], "HTML"))
 
-        # Mientras haya una pregunta se muestran,
-        # pero sólo avanza con s hasta finalizar las preguntas existentes
-        while True:
-            question = self.get_next_question()
-            if not question:
-                print("No hay más preguntas. Fin del quiz.")
-                break
+def run_quiz():
+    quiz = Quiz()
 
-            print(f"\nPregunta: {question.description}")
-            for i, option in enumerate(question.options):
-                print(f"{i + 1}. {option}")
+    # Se agregarán exactamente 10 preguntas
+    quiz.add_question(Question("¿Cuál es la capital de Francia?", ["Madrid", "París", "Berlín", "Lisboa"], "París"))
+    quiz.add_question(Question("¿Cuánto es 2 + 2?", ["3", "4", "5", "6"], "4"))
+    quiz.add_question(Question("¿Qué lenguaje se usa para el desarrollo web del lado del cliente?", ["Python", "Java", "HTML", "C++"], "HTML"))
+    quiz.add_question(Question("¿Cuál es el río más largo del mundo?", ["Amazonas", "Nilo", "Yangtsé", "Misisipi"], "Amazonas"))
+    quiz.add_question(Question("¿Qué planeta es el cuarto en el sistema solar?", ["Venus", "Marte", "Júpiter", "Saturno"], "Marte"))
+    quiz.add_question(Question("¿Cuánto es 3 * 5?", ["8", "15", "10", "20"], "15"))
+    quiz.add_question(Question("¿Qué significa 'HTML'?", ["Hyper Trainer Marking Language", "Hyper Text Markup Language", "Hyper Text Marketing Language", "Home Tool Markup Language"], "Hyper Text Markup Language"))
+    quiz.add_question(Question("¿Cuánto es la raíz cuadrada de 81?", ["9", "8", "7", "6"], "9"))
+    quiz.add_question(Question("¿Cuál de los siguientes lenguajes es compilado?", ["Python", "JavaScript", "C", "Ruby"], "C"))
+    quiz.add_question(Question("¿Qué invento se atribuye a Alexander Graham Bell?", ["Teléfono", "Bombilla", "Internet", "Radio"], "Teléfono"))
 
-            input("Presiona 's' para continuar a la siguiente pregunta: ").strip().lower()
+    # Mientras el número de pregunta actual sea menor a 10,
+    # obtener la pregunta y presentarla con las alternativas
+    while quiz.current_question_index < 10:
+        question = quiz.get_next_question()
+        print(f"\nPregunta: {question.description}")
+        for i, option in enumerate(question.options):
+            print(f"{i + 1}. {option}")
+        answer = input("Ingresa la respuesta: ")
+        if quiz.answer_question(question, answer):
+            print("La respuesta... es correctaa :D")
+        else:
+            print("La respuesta... es falsaa D:")
+
+#run_quiz()
