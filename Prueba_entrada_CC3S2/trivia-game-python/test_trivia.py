@@ -18,7 +18,7 @@ def test_quiz_scoring():
     assert quiz.answer_question(question, "4") == True
     assert quiz.correct_answers == 1
 
-def test_run_quiz_all_correct(capsys):
+def test_run_quiz(capsys):
     # Simula que el usuario responde "1" para todas (la opción "1")
     inputs = ['1'] * 10
     with patch('builtins.input', side_effect=inputs):
