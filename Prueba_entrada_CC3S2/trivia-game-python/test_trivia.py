@@ -1,5 +1,6 @@
 import pytest
-from trivia import Quiz, Question, run_quiz
+from trivia import Quiz, run_quiz
+from models import Question
 from unittest.mock import patch
 
 def test_question_correct_answer():
