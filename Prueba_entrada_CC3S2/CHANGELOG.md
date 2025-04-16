@@ -301,3 +301,53 @@ print(f"Respuestas incorrectas: {quiz.incorrect_answers}")
 - `Dockerfile`  
 - `docker-compose.yml`
 
+## Día 7 - Configuración por entorno, pruebas de seguridad y pruebas de carga
+
+**Rama**: `feature/dia7`  
+**Commits relevantes**:  
+- `ff0225da9fab863097cb8c6bfceea66b92d64383`  
+- `a9be0a28ddfc682c4a23468d96f085b76602b1bd`
+
+### Actividades realizadas
+
+- **Gestión de configuración mediante variables de entorno**:
+  - Se creó el archivo `.env` con las siguientes variables:
+    ```env
+    DATABASE_URL=postgresql://user:password@db:5432/trivia_db  
+    SECRET_KEY=mysecretkey
+    ```
+  - Se modificó la aplicación para cargar estas variables utilizando `python-dotenv`:
+    ```python
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    ```
+
+- **Pruebas de seguridad con Bandit**:
+  - Se integró la herramienta de análisis de seguridad estática **Bandit** al workflow de CI.
+  - Se añadió la etapa correspondiente al pipeline:
+    ```yaml
+    - name: Run Security Scan
+      run: bandit -r .
+    ```
+
+- **Pruebas de carga con Locust**:
+  - Se creó el archivo `locustfile.py` para simular usuarios accediendo a la aplicación:
+    ```python
+    from locust import HttpUser, task
+
+    class TriviaUser(HttpUser):
+        @task
+        def play_trivia(self):
+            self.client.get("/play")
+    ```
+
+### Archivos nuevos
+
+- `.env`  
+- `locustfile.py`  
+
+
