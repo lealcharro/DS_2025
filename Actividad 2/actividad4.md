@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/1d2993e0-ace0-4e43-9994-dcdf49e48df4)![image](https://github.com/user-attachments/assets/a4aa1812-b627-4d23-9ab9-25d3039db792)## **Actividad:** Introducción a Git - conceptos básicos y operaciones esenciales
+## **Actividad:** Introducción a Git - conceptos básicos y operaciones esenciales
 #### git config: Preséntate a Git
 
 - Verifica que tu presentación se ha registrado.
