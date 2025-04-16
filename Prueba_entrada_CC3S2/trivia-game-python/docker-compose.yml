@@ -39,5 +39,12 @@ services:
       db:
         condition: service_healthy
         
+  security_scan:
+    build: .
+    volumes:
+      - .:/app
+    # Ejecuta el análisis de seguridad con Bandit
+    command: /opt/venv/bin/bandit -r .
+        
 volumes:
   postgres_data:
