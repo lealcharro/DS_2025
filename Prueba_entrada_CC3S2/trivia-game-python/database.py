@@ -3,12 +3,16 @@ import asyncio
 from fastapi import FastAPI, HTTPException, status
 import databases
 from models import Question
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # URL de conexión a la base de datos PostgreSQL
-DATABASE_URL = "postgresql://user:password@db:5432/trivia_db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 # URL de conexión a la base de datos PostgreSQL para desarrollo
 # Nota: Comentar cuando se realice docker-compose up test 
-DATABASE_URL = "postgresql://user:password@localhost:5432/trivia_db"
+DATABASE_URL = os.getenv("DATABASE_URL_DEV")
 
 # Instancia de conexión asíncrona usando "databases"
 database = databases.Database(DATABASE_URL)
@@ -119,6 +123,16 @@ async def read_questions():
     result = [quiz_question_to_dict(dict(row), id=row["id"]) for row in rows]
     print(result)
     return result
+
+@app.get("/play")
+async def play():
+    # Sólo devuelve una pregunta aleatoria
+    query = "SELECT * FROM questions ORDER BY RANDOM() LIMIT 1"
+    question = await database.fetch_one(query=query)
+    if question:
+        return quiz_question_to_dict(dict(question), id=question["id"])
+    return {"error": "No hay preguntas disponibles"}
+
 
 def load_questions_from_db():
     async def _load():

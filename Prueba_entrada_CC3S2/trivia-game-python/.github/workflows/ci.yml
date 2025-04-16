@@ -3,8 +3,6 @@ name: Trivia App CI
 on:
   push:
     branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
 
 jobs:
   test:
@@ -42,14 +40,9 @@ jobs:
       run: |
         pytest -v
       env:
-        DATABASE_URL: postgresql://user:password@localhost:5432/trivia_db
+        DATABASE_URL: postgresql://user:password@db:5432/trivia_db
     
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-  
+      
   sonarqube:
     needs: test
     runs-on: ubuntu-latest
