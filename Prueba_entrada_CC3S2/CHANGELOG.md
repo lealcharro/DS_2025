@@ -252,7 +252,52 @@ print("Juego terminado. Aquí está tu puntuación:")
 print(f"Preguntas contestadas: {quiz.current_question_index}")
 print(f"Respuestas correctas: {quiz.correct_answers}")
 print(f"Respuestas incorrectas: {quiz.incorrect_answers}")
-yaml
-Copiar
-Editar
 '''
+
+## Día 6 - Conexión a base de datos, pruebas de integración y mejoras en estructura
+
+**Rama**: `feature/dia6`  
+
+### Actividades realizadas
+
+- **Extracción y reorganización del código**:
+  - Se separó la clase `Question` en un archivo independiente para evitar problemas de importación circular entre `trivia.py` y `database.py`.
+
+- **Implementación de conexión con base de datos**:
+  - Se creó el archivo `database.py` para inicializar FastAPI, conectar con PostgreSQL y definir funciones que permiten interactuar con preguntas almacenadas.
+
+- **Mejoras a `trivia.py`**:
+  - Ahora obtiene las preguntas desde la base de datos.
+  - Se mejoró el manejo de excepciones al recuperar preguntas y ejecutar el flujo del juego.
+
+- **Pruebas de integración**:
+  - Se añadió el archivo `test_api.py` con dos pruebas:
+    1. Inserción de una pregunta en la base de datos.
+    2. Inserción y posterior solicitud de una pregunta insertada.
+  - Se incluyó el módulo `httpx` y `pytest` en `requirements.txt` para facilitar pruebas asíncronas con FastAPI.
+
+- **Configuración de entorno de testing**:
+  - Se actualizó el `Dockerfile`:
+    - Instalación de dependencias del sistema necesarias para `psycopg2`.
+    - Activación del entorno virtual y ejecución de `pytest` desde el contenedor.
+  - Se actualizó el archivo `docker-compose.yml`:
+    - Se definió un servicio persistente para PostgreSQL.
+    - Se eliminó el servicio web, ya que la app corre en terminal.
+    - Se creó un servicio `test` que ejecuta los tests automáticamente al levantar el entorno.
+
+- **Automatización con workflows**:
+  - Se agregó y actualizó el archivo de workflow para facilitar integración y despliegue continuo, conectando pruebas y validaciones a procesos automatizados.
+
+### Archivos nuevos
+
+- `database.py`  
+- `test_api.py`  
+- `.github/workflows/...` (workflow nuevo)  
+
+### Archivos modificados
+
+- `trivia.py`  
+- `requirements.txt`  
+- `Dockerfile`  
+- `docker-compose.yml`
+
