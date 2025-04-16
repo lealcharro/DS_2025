@@ -3,3 +3,4 @@ uvicorn
 pytest>=6.2.5
 httpx>=0.19.0
 databases[asyncpg]
+locust>=2.22.0

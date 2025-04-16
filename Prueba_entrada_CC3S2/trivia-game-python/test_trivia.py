@@ -1,4 +1,3 @@
-import pytest
 from trivia import Quiz, run_quiz
 from models import Question
 from unittest.mock import patch
