@@ -1,5 +1,6 @@
 from behave import given, when, then
 import re
+import random
 
 # Función para convertir palabras numéricas a números
 def convertir_palabra_a_numero(palabra):
@@ -21,6 +22,27 @@ def convertir_palabra_a_numero(palabra):
             "seventy": 70, "eighty": 80, "ninety": 90, "half": 0.5
         }
         return numeros.get(palabra.lower(), 0)
+    
+    
+def extraer_rango_y_generar_valor_aleatorio(expresion):
+    patron = re.compile(r'.*?\bentre\s+'
+        r'(\w+(?:[.,]\d+)?)\s+y\s+'
+        r'(\w+(?:[.,]\d+)?)\s+(horas?|minutos?|segundos?)')
+    match = patron.match(expresion.strip())
+
+    valor1 = float(match.group(1).replace(',', '.'))
+    valor2 = float(match.group(2).replace(',', '.'))
+    unidad = match.group(3).lower()
+
+    valor_random = random.uniform(valor1, valor2)
+
+    if unidad in ['minutes', 'minutos']:
+        valor_random /= 60
+    elif unidad == ['seconds', 'segundos']:
+        valor_random /= 3600 
+    
+    return valor_random
+
 
 @given('que he comido {cukes} pepinos')
 def step_given_eaten_cukes(context, cukes):
@@ -30,6 +52,13 @@ def step_given_eaten_cukes(context, cukes):
 @when('espero {time_description}')
 def step_when_wait_time_description(context, time_description):
     time_description = time_description.strip('"').lower()
+
+    # Verificar si existe un "entre"
+    if "entre" in time_description:
+        total_time_in_hours = extraer_rango_y_generar_valor_aleatorio(time_description)
+        context.belly.esperar(total_time_in_hours)
+        return
+
     time_description = time_description.replace('y', ' ')
     time_description = time_description.replace('and', ' ')
     time_description = time_description.strip()
@@ -67,4 +96,3 @@ def step_then_belly_should_growl(context):
 @then('mi estómago no debería gruñir')
 def step_then_belly_should_not_growl(context):
     assert not context.belly.esta_gruñendo(), "Se esperaba que el estómago no gruñera, pero lo hizo."
-

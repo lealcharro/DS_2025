@@ -54,6 +54,7 @@ Característica: Característica del estómago
 
 #Ejercicio 2 (Acepta fracciones de pepinos)
 
+  @spanish
   Escenario: Comer pepinos fraccionados
     Dado que he comido 35.5 pepinos
     Cuando espero "1 hora y 30 minutos y 45 segundos"
@@ -71,4 +72,12 @@ Característica: Característica del estómago
   Escenario: Comer una buena cantidad de pepinos y esperar usando horas en inglés
     Dado que he comido 20 pepinos
     Cuando espero "two hours and thirty minutes"
+    Entonces mi estómago debería gruñir
+
+#Ejercicio 4 (Acepta valores aleatorios dentro de un rango)
+
+  @spanish
+  Escenario: Comer pepinos y esperar un tiempo aleatorio
+    Dado que he comido 25 pepinos
+    Cuando espero un tiempo aleatorio entre 1 y 3 horas
     Entonces mi estómago debería gruñir
