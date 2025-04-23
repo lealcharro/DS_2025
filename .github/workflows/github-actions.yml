@@ -34,3 +34,51 @@ jobs:
 
     - name: Run BDD tests (behave)
       run: behave features/
+
+  test-spanish:
+    name: Run BDD @spanish
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Actividad7
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install behave pytest
+
+    - name: "Run BDD tests (tag: @spanish)"
+      run: behave features/ --tags=@spanish
+
+  test-english:
+    name: Run BDD @english
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Actividad7
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install behave pytest
+
+    - name: "Run BDD tests (tag: @english)"
+      run: behave features/ --tags=@english
