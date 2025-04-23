@@ -1,7 +1,18 @@
 import pytest
 from  features.steps.belly_steps import re, convertir_palabra_a_numero
+from src.belly import Belly  
 
-# Parser reducido para pruebas
+def test_comer_pepinos_fraccionarios():
+    belly = Belly()
+    belly.comer(35.5)
+    assert belly.pepinos_comidos == 35.5
+
+def test_comer_pepinos_negativos():
+    belly = Belly()
+    with pytest.raises(ValueError, match="No se puede comer una cantidad negativa"):
+        belly.comer(-2)
+
+# Parser para pruebas
 def parsear_tiempo_de_descripcion(time_description):
     time_description = time_description.strip('"').lower()
     time_description = time_description.replace('y', ' ')
@@ -25,13 +36,10 @@ def parsear_tiempo_de_descripcion(time_description):
         hours_word = match.group(1) or "0"
         minutes_word = match.group(2) or "0"
         seconds_word = match.group(3) or "0"
-        print(hours_word,minutes_word,seconds_word)
 
         hours = convertir_palabra_a_numero(hours_word)
         minutes = convertir_palabra_a_numero(minutes_word)
         seconds = convertir_palabra_a_numero(seconds_word)
-
-        print(hours,minutes,seconds)
 
         return hours + (minutes / 60) + (seconds / 3600)
         

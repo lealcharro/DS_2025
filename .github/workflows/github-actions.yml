@@ -30,7 +30,7 @@ jobs:
         pip install behave pytest
 
     - name: Run unit tests (pytest)
-      run: pytest tests/
+      run: pytest tests/ --maxfail=1 --disable-warnings
 
     - name: Run BDD tests (behave)
       run: behave features/
